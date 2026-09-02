@@ -46,6 +46,24 @@
 </div>
     <h2 id="nome1">Seleziona Auto</h2>
 
+<div>
+  <div id="listino-box1" style="display:none;">
+    <span class="diagonal-strike">€ <span id="listino1"></span></span>
+  </div>
+
+  <div id="prezzo-box1" style="display:none; color:green; font-size:18px;">
+    € <span id="prezzo-upgrade1"></span> / day + tax
+  </div>
+</div>
+
+<!-- pannello prezzi colonna sinistra -->
+<div id="admin-panel1" style="display:none;">
+  <input id="input-listino1" placeholder="Prezzo listino">
+  <input id="input-upgrade1" placeholder="Prezzo scontato">
+  <button onclick="aggiornaPrezzi(1)">OK</button>
+  <button class="btn-pulisci" onclick="nascondiExtra(1)">Pulisci</button>
+</div>
+
 
 
     <h3>Caratteristiche</h3>
@@ -110,21 +128,21 @@
 
 
 <div>
-  <div id="listino-box" style="display:none;">
-    <span class="diagonal-strike">€ <span id="listino"></span></span>
+  <div id="listino-box2" style="display:none;">
+    <span class="diagonal-strike">€ <span id="listino2"></span></span>
   </div>
 
-  <div id="prezzo-box" style="display:none; color:green; font-size:18px;">
-    € <span id="prezzo-upgrade"></span> / day + tax
+  <div id="prezzo-box2" style="display:none; color:green; font-size:18px;">
+    € <span id="prezzo-upgrade2"></span> / day + tax
   </div>
 </div>
 
-<!-- pannello admin -->
-<div id="admin-panel" style="display:none;">
-  <input id="input-listino" placeholder="Prezzo listino">
-  <input id="input-upgrade" placeholder="Prezzo upgrade">
-  <button onclick="aggiornaPrezzi()">OK</button>
-  <button id="btn-pulisci" class="btn-pulisci" onclick="nascondiExtra()">Pulisci</button>
+<!-- pannello prezzi colonna destra -->
+<div id="admin-panel2" style="display:none;">
+  <input id="input-listino2" placeholder="Prezzo listino">
+  <input id="input-upgrade2" placeholder="Prezzo scontato">
+  <button onclick="aggiornaPrezzi(2)">OK</button>
+  <button class="btn-pulisci" onclick="nascondiExtra(2)">Pulisci</button>
 </div>
 
 
@@ -153,17 +171,18 @@
 <script>
 
 
-let prezziConfermati = false;
+let prezziConfermati = { 1: false, 2: false };
+let ultimaAuto1 = "";
 let ultimaAuto2 = "";
 
 
-function aggiornaPrezzi() {
+function aggiornaPrezzi(colonna) {
 
-  const listino = document.getElementById("input-listino").value;
-  const upgrade = document.getElementById("input-upgrade").value;
+  const listino = document.getElementById(`input-listino${colonna}`).value;
+  const upgrade = document.getElementById(`input-upgrade${colonna}`).value;
 
-  const listinoBox = document.getElementById("listino-box");
-  const prezzoBox = document.getElementById("prezzo-box");
+  const listinoBox = document.getElementById(`listino-box${colonna}`);
+  const prezzoBox = document.getElementById(`prezzo-box${colonna}`);
 
   if (!listino || !upgrade) {
     listinoBox.style.display = "none";
@@ -171,18 +190,18 @@ function aggiornaPrezzi() {
     return;
   }
 
-  document.getElementById("listino").innerText = listino;
-  document.getElementById("prezzo-upgrade").innerText = upgrade;
+  document.getElementById(`listino${colonna}`).innerText = listino;
+  document.getElementById(`prezzo-upgrade${colonna}`).innerText = upgrade;
 
-  document.getElementById("listino").style.fontWeight = "bold";
-  document.getElementById("prezzo-upgrade").style.fontWeight = "bold";
+  document.getElementById(`listino${colonna}`).style.fontWeight = "bold";
+  document.getElementById(`prezzo-upgrade${colonna}`).style.fontWeight = "bold";
 
   listinoBox.style.display = "block";
   prezzoBox.style.display = "block";
 
-  prezziConfermati = true;
+  prezziConfermati[colonna] = true;
 
-  document.getElementById("admin-panel").style.display = "none";
+  document.getElementById(`admin-panel${colonna}`).style.display = "none";
 }
 
 
@@ -1562,7 +1581,6 @@ const auto = {
   }
 },
 
-
 "JAECOO 5": {
   img: "foto auto/jaecoo5.jpg",
 
@@ -1611,6 +1629,7 @@ const auto = {
   }
 },
 	
+
 "Jeep Avenger": {
   img: "foto auto/avenger.jpg",
 
@@ -2295,6 +2314,56 @@ const auto = {
     v4:"Conducción segura"
   }
 },
+
+
+"Mercedes GLE": {
+  img: "foto auto/gle.jpg",
+
+  it:{
+    c1:"Bagagliaio da circa 630 litri",
+    c2:"Grande SUV premium",
+    c3:"Interni lussuosi",
+    c4:"Motore potente",
+    v1:"Ideale per famiglie",
+    v2:"Perfetta per viaggi",
+    v3:"Guida alta e comoda",
+    v4:"Spaziosa ed elegante"
+  },
+
+  en:{
+    c1:"Approximately 630-liter trunk",
+    c2:"Large premium SUV",
+    c3:"Luxury interior",
+    c4:"Powerful engine",
+    v1:"Ideal for families",
+    v2:"Perfect for travel",
+    v3:"High comfortable driving",
+    v4:"Spacious and elegant"
+  },
+
+  fr:{
+    c1:"Coffre d’environ 630 litres",
+    c2:"Grand SUV premium",
+    c3:"Intérieur luxueux",
+    c4:"Moteur puissant",
+    v1:"Idéal pour les familles",
+    v2:"Parfait pour les voyages",
+    v3:"Conduite haute et confortable",
+    v4:"Spacieux et élégant"
+  },
+
+  es:{
+    c1:"Maletero de unos 630 litros",
+    c2:"Gran SUV premium",
+    c3:"Interior lujoso",
+    c4:"Motor potente",
+    v1:"Ideal para familias",
+    v2:"Perfecto para viajes",
+    v3:"Conducción alta y cómoda",
+    v4:"Espacioso y elegante"
+  }
+},
+
 
 	"Mercedes Vito": {
   img: "foto auto/vito.jpg",
@@ -3462,6 +3531,56 @@ const auto = {
   }
 },
 
+
+"Toyota Yaris": {
+  img: "foto auto/yaris.jpg",
+
+  it:{
+    c1:"Bagagliaio da circa 286 litri",
+    c2:"Utilitaria compatta",
+    c3:"Interni pratici",
+    c4:"Motore ibrido efficiente",
+    v1:"Facile da parcheggiare",
+    v2:"Ideale per la città",
+    v3:"Consumi ridotti",
+    v4:"Agile e affidabile"
+  },
+
+  en:{
+    c1:"Approximately 286-liter trunk",
+    c2:"Compact city car",
+    c3:"Practical interior",
+    c4:"Efficient hybrid engine",
+    v1:"Easy to park",
+    v2:"Ideal for the city",
+    v3:"Low fuel consumption",
+    v4:"Agile and reliable"
+  },
+
+  fr:{
+    c1:"Coffre d’environ 286 litres",
+    c2:"Citadine compacte",
+    c3:"Intérieur pratique",
+    c4:"Moteur hybride efficace",
+    v1:"Facile à garer",
+    v2:"Idéale pour la ville",
+    v3:"Faible consommation",
+    v4:"Agile et fiable"
+  },
+
+  es:{
+    c1:"Maletero de unos 286 litros",
+    c2:"Utilitario compacto",
+    c3:"Interior práctico",
+    c4:"Motor híbrido eficiente",
+    v1:"Fácil de aparcar",
+    v2:"Ideal para ciudad",
+    v3:"Bajo consumo",
+    v4:"Ágil y fiable"
+  }
+},
+
+
 "Volkswagen Polo": {
   img: "foto auto/polo.jpg",
 
@@ -3870,45 +3989,41 @@ function aggiorna() {
   // PREZZI + ADMIN PANEL (FIX DEFINITIVO)
   // =====================
 
-  const adminPanel = document.getElementById("admin-panel");
-  const listinoBox = document.getElementById("listino-box");
-  const prezzoBox = document.getElementById("prezzo-box");
+  gestisciPannelloPrezzi(1, s1.value, ultimaAuto1);
+  gestisciPannelloPrezzi(2, s2.value, ultimaAuto2);
 
-// se cambio auto 2 → reset prezzi e mostra pannello
-if (s2.value !== ultimaAuto2) {
-
-    // cancella prezzi precedenti
-    document.getElementById("input-listino").value = "";
-    document.getElementById("input-upgrade").value = "";
-
-    document.getElementById("listino").innerText = "";
-    document.getElementById("prezzo-upgrade").innerText = "";
-
-    listinoBox.style.display = "none";
-    prezzoBox.style.display = "none";
-
-    prezziConfermati = false;
-
-    if (s2.value && s2.value !== "Seleziona Auto" && auto[s2.value]) {
-        adminPanel.style.display = "block";
-    } else {
-        adminPanel.style.display = "none";
-    }
-
-    ultimaAuto2 = s2.value;
+  ultimaAuto1 = s1.value;
+  ultimaAuto2 = s2.value;
 }
+
+function gestisciPannelloPrezzi(colonna, autoSelezionata, ultimaAuto) {
+  if (autoSelezionata === ultimaAuto) return;
+
+  document.getElementById(`input-listino${colonna}`).value = "";
+  document.getElementById(`input-upgrade${colonna}`).value = "";
+  document.getElementById(`listino${colonna}`).innerText = "";
+  document.getElementById(`prezzo-upgrade${colonna}`).innerText = "";
+  document.getElementById(`listino-box${colonna}`).style.display = "none";
+  document.getElementById(`prezzo-box${colonna}`).style.display = "none";
+
+  prezziConfermati[colonna] = false;
+
+  const autoValida = autoSelezionata &&
+    autoSelezionata !== "Seleziona Auto" && auto[autoSelezionata];
+
+  document.getElementById(`admin-panel${colonna}`).style.display =
+    autoValida ? "block" : "none";
 }
 
 
 
 
 
+function nascondiExtra(colonna){
 
-function nascondiExtra(){
-
-  const listinoBox = document.getElementById("listino-box");
-  const prezzoBox = document.getElementById("prezzo-box");
-  const adminPanel = document.getElementById("admin-panel");
+  const listinoBox = document.getElementById(`listino-box${colonna}`);
+  const prezzoBox = document.getElementById(`prezzo-box${colonna}`);
+  const adminPanel = document.getElementById(`admin-panel${colonna}`);
 
   // nasconde prezzi visualizzati
   listinoBox.style.display = "none";
@@ -3944,4 +4059,3 @@ function cambiaLingua(lang){
 
 </body>
 </html>
-
