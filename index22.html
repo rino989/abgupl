@@ -3415,9 +3415,11 @@ for (let nome in auto) {
   lista2.innerHTML += `<option value="${nome}">`;
 }
 
-// Valori iniziali
-s1.value = sessionStorage.getItem("auto1") || "Seleziona Auto";
-s2.value = sessionStorage.getItem("auto2") || "Seleziona Auto";
+// Valori iniziali: ad ogni caricamento le due selezioni partono vuote
+sessionStorage.removeItem("auto1");
+sessionStorage.removeItem("auto2");
+s1.value = "";
+s2.value = "";
 
 
 
@@ -3662,10 +3664,23 @@ function cambiaLingua(lang){
   aggiorna();
 }
 
-// Dopo un refresh (F5) i valori degli input possono essere ripristinati
-// da sessionStorage: ricostruisce subito immagini, nomi e caratteristiche
-// di entrambe le card mantenendo invariati i pannelli prezzo a sinistra e destra.
-aggiorna();
+// Reset completo delle auto ad ogni caricamento/refresh (F5).
+// Il listener pageshow viene eseguito anche dopo l'eventuale ripristino
+// automatico dei valori dei campi da parte del browser.
+function resetAutoDopoRefresh(){
+  sessionStorage.removeItem("auto1");
+  sessionStorage.removeItem("auto2");
+
+  s1.value = "";
+  s2.value = "";
+
+  ultimaAuto1 = "";
+  ultimaAuto2 = "";
+
+  aggiorna();
+}
+
+window.addEventListener("pageshow", resetAutoDopoRefresh);
       
 
 </script>
