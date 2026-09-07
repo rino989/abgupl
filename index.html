@@ -3415,9 +3415,11 @@ for (let nome in auto) {
   lista2.innerHTML += `<option value="${nome}">`;
 }
 
-// Valori iniziali
-s1.value = sessionStorage.getItem("auto1") || "Seleziona Auto";
-s2.value = sessionStorage.getItem("auto2") || "Seleziona Auto";
+// Valori iniziali: ad ogni caricamento le due selezioni partono vuote
+sessionStorage.removeItem("auto1");
+sessionStorage.removeItem("auto2");
+s1.value = "";
+s2.value = "";
 
 
 
@@ -3479,6 +3481,10 @@ function filtra(inputId, listId){
 
       div.onclick = function(){
         document.getElementById(inputId).value = nome;
+
+        // Mantiene sincronizzata l'auto selezionata anche quando
+        // la scelta avviene dai risultati filtrati della ricerca.
+        sessionStorage.setItem(inputId, nome);
         box.style.display = "none";
         aggiorna();
       };
@@ -3657,6 +3663,24 @@ function cambiaLingua(lang){
 
   aggiorna();
 }
+
+// Reset completo delle auto ad ogni caricamento/refresh (F5).
+// Il listener pageshow viene eseguito anche dopo l'eventuale ripristino
+// automatico dei valori dei campi da parte del browser.
+function resetAutoDopoRefresh(){
+  sessionStorage.removeItem("auto1");
+  sessionStorage.removeItem("auto2");
+
+  s1.value = "";
+  s2.value = "";
+
+  ultimaAuto1 = "";
+  ultimaAuto2 = "";
+
+  aggiorna();
+}
+
+window.addEventListener("pageshow", resetAutoDopoRefresh);
       
 
 </script>
